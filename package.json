@@ -1,0 +1,17 @@
+{
+  "name": "digimutation",
+  "version": "1.0.0",
+  "description": "Technology news and events for decision makers.\r cover the latest news and reviews in the world of technology. (including new products, software updates, and trends in the tech industry)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1"
+  }
+}
