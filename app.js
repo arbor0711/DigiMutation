@@ -19,6 +19,11 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+app.get("/Events", async (req, res) => {
+  const events = await Event.find({});
+  res.render("events/index", { events });
+});
+
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
