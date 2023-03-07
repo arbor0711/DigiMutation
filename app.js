@@ -19,9 +19,14 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.get("/Events", async (req, res) => {
+app.get("/events", async (req, res) => {
   const events = await Event.find({});
   res.render("events/index", { events });
+});
+
+app.get("/events/:id", async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  res.render("events/show", { event });
 });
 
 app.listen(3000, () => {
