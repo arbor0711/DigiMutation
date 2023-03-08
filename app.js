@@ -4,6 +4,7 @@ const app = express();
 const methodOverride = require("method-override");
 const Event = require("./models/events");
 const mongoose = require("mongoose");
+const ejsMate = require("ejs-mate");
 const { findByIdAndUpdate } = require("./models/events");
 
 mongoose
@@ -14,6 +15,7 @@ mongoose
     console.log(err);
   });
 
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
