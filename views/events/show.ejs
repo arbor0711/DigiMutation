@@ -13,7 +13,12 @@
       <p><%= event.location %> <a href="">Get Direction</a></p>
       <p><%= event.date %> <a href="">Add to Calender</a></p>
     </div>
-    <button><a href="/events">Reserve</a></button>
+
+    <button><a href="/events/<%=event._id%>/edit">Edit</a></button>
+    <form action="/events/<%= event._id %>?_method=DELETE" method="post">
+      <button>Delete</button>
+    </form>
+
     <button><a href="/events">All Events</a></button>
     <button><a href="/">Homepage</a></button>
   </body>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Event</title>
+  </head>
+  <body>
+    <h1>Add an event</h1>
+    <form action="/events" method="post">
+      <div>
+        <label for="name">Title:</label>
+        <br />
+        <input type="text" name="event[name]" id="name" />
+      </div>
+
+      <div>
+        <label for="location">Location:</label>
+        <br />
+        <input type="text" name="event[location]" id="location" />
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <br />
+        <textarea
+          name="event[description]"
+          id="description"
+          cols="30"
+          rows="10"
+        ></textarea>
+      </div>
+
+      <label for="date">Date: </label>
+      <input type="date" name="event[date]" id="date" />
+      <br />
+      <br />
+      <input type="submit" value="Add" />
+      <button type="reset">Reset Form</button>
+      <button><a href="/events">Back</a></button>
+      <button><a href="/">Homepage</a></button>
+    </form>
+  </body>
+</html>
