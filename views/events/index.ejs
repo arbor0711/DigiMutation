@@ -4,8 +4,10 @@
 <div>
   <button><a href="/events/new">Add a new event</a></button>
 </div>
-<ul>
-  <% for (let event of events){ %>
-  <li><%= event.name %> <a href="/events/<%= event._id %>">Details</a></li>
-  <% } %>
-</ul>
+<div class="container">
+  <ul>
+    <% for (let event of events){ %>
+    <li><%= event.name %> <a href="/events/<%= event._id %>">Details</a></li>
+    <% } %>
+  </ul>
+</div>
