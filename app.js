@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("events/home");
 });
 
 app.get("/events", async (req, res) => {
