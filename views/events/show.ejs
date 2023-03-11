@@ -1,17 +1,44 @@
 <% layout("layouts/boilerplate") %>
 
-<div>
-  <h1><%= event.name%></h1>
-  <p><%= event.location %> <a href="">Get Direction</a></p>
-  <img src="<%= event.image%>" alt="" />
-  <p><%=event.description%></p>
-  <p><%= event.date %> <a href="">Add to Calender</a></p>
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mb-3">
+      <img
+        src="<%= event.image%>"
+        class="card-img-top"
+        alt="images of <%= event.name%>"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= event.name%></h5>
+        <p class="card-text"><%=event.description%></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted">
+          <%= event.location %>
+          <span class="badge rounded-pill text-bg-light"
+            ><a class="text-decoration-none" href="">Get Direction</a></span
+          >
+        </li>
+        <li class="list-group-item text-muted">
+          <%= event.date %>
+          <span class="badge rounded-pill text-bg-light"
+            ><a class="text-decoration-none" href="">Add to calender</a></span
+          >
+        </li>
+      </ul>
+
+      <div class="card-body">
+        <a class="btn btn-secondary" href="/events/<%=event._id%>/edit">Edit</a>
+        <form
+          class="d-inline"
+          action="/events/<%= event._id %>?_method=DELETE"
+          method="post"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+        <a class="btn btn-secondary" href="/events">All Events</a>
+        <a class="btn btn-secondary" href="/">Homepage</a>
+      </div>
+    </div>
+  </div>
 </div>
-
-<button><a href="/events/<%=event._id%>/edit">Edit</a></button>
-<form action="/events/<%= event._id %>?_method=DELETE" method="post">
-  <button>Delete</button>
-</form>
-
-<button><a href="/events">All Events</a></button>
-<button><a href="/">Homepage</a></button>
