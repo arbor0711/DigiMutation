@@ -2,6 +2,7 @@ const Event = require("../models/events");
 const mongoose = require("mongoose");
 const conferences = require("./conferences");
 const images = require("./images");
+const { indexOf } = require("./conferences");
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/digi-mutation")
@@ -11,10 +12,14 @@ mongoose
     console.log(err);
   });
 
+let i = 0;
 for (let conference of conferences) {
-  let imgNumber = Math.floor(Math.random() * images.length);
-  let img = `${imgNumber}`;
-  conference.image = images[img];
+  while (i < conferences.length) {
+    i++;
+    console.log(images[i]);
+    conference.image = images[i];
+    break;
+  }
 }
 
 const seedDB = async () => {
