@@ -5,8 +5,9 @@ const methodOverride = require("method-override");
 const Event = require("./models/events");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const { findByIdAndUpdate } = require("./models/events");
-
+// const { findByIdAndUpdate } = require("./models/events");
+const ExpressError = require("./utils/ExpressError");
+const catchAsync = require("./utils/catchAsync");
 mongoose
   .connect("mongodb://127.0.0.1:27017/digi-mutation")
   .then(() => console.log("Mongo Connection Open."))
@@ -26,56 +27,70 @@ app.get("/", (req, res) => {
   res.render("events/home");
 });
 
-app.get("/events", async (req, res) => {
-  const events = await Event.find({});
-  res.render("events/index", { events });
-});
+app.get(
+  "/events",
+  catchAsync(async (req, res) => {
+    const events = await Event.find({});
+    res.render("events/index", { events });
+  })
+);
 
 app.get("/events/new", (req, res) => {
   res.render("events/new");
 });
 
-app.post("/events", async (req, res) => {
-  // befor we can use the req.body we've got to tell Express to parse the body
-  // app.use(express.urlencoded({ extended: true }));
-  const event = new Event(req.body.event);
-  await event.save();
-  res.redirect(`/events/${event._id}`);
-});
+app.post(
+  "/events",
+  catchAsync(async (req, res) => {
+    // befor we can use the req.body we've got to tell Express to parse the body
+    // app.use(express.urlencoded({ extended: true }));
+    const event = new Event(req.body.event);
+    await event.save();
+    res.redirect(`/events/${event._id}`);
+  })
+);
 
-app.get("/events/:id", async (req, res, next) => {
-  try {
-    const event = await Event.findById(req.params.id);
-    res.render("events/show", { event });
-  } catch (e) {
-    next(e);
-  }
-});
+app.get(
+  "/events/:id",
+  catchAsync(async (req, res, next) => {
+    try {
+      const event = await Event.findById(req.params.id);
+      res.render("events/show", { event });
+    } catch (e) {
+      next(e);
+    }
+  })
+);
 
-app.get("/events/:id/edit", async (req, res, next) => {
-  try {
+app.get(
+  "/events/:id/edit",
+  catchAsync(async (req, res, next) => {
     const event = await Event.findById(req.params.id);
     res.render("events/edit", { event });
-  } catch (e) {
-    next(e);
-  }
-});
+  })
+);
 
-app.put("/events/:id", async (req, res) => {
-  const { id } = req.params;
-  const event = await Event.findByIdAndUpdate(
-    id,
-    { ...req.body.event },
-    { new: true }
-  );
-  res.redirect(`/events/${event._id}`);
-});
+app.put(
+  "/events/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const event = await Event.findByIdAndUpdate(
+      id,
+      { ...req.body.event },
+      { new: true }
+    );
+    res.redirect(`/events/${event._id}`);
+  })
+);
 
-app.delete("/events/:id", async (req, res) => {
-  const { id } = req.params;
-  await Event.findByIdAndDelete(id);
-  res.redirect("/events");
-});
+app.delete(
+  "/events/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Event.findByIdAndDelete(id);
+    res.redirect("/events");
+  })
+);
 
 // set up our own error handler-Error handling signature
 app.use((err, req, res, next) => {
