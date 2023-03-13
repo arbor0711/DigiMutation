@@ -43,14 +43,22 @@ app.post("/events", async (req, res) => {
   res.redirect(`/events/${event._id}`);
 });
 
-app.get("/events/:id", async (req, res) => {
-  const event = await Event.findById(req.params.id);
-  res.render("events/show", { event });
+app.get("/events/:id", async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    res.render("events/show", { event });
+  } catch (e) {
+    next(e);
+  }
 });
 
-app.get("/events/:id/edit", async (req, res) => {
-  const event = await Event.findById(req.params.id);
-  res.render("events/edit", { event });
+app.get("/events/:id/edit", async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    res.render("events/edit", { event });
+  } catch (e) {
+    next(e);
+  }
 });
 
 app.put("/events/:id", async (req, res) => {
@@ -67,6 +75,11 @@ app.delete("/events/:id", async (req, res) => {
   const { id } = req.params;
   await Event.findByIdAndDelete(id);
   res.redirect("/events");
+});
+
+// set up our own error handler-Error handling signature
+app.use((err, req, res, next) => {
+  res.send("OH BOY!!! Somthing went wrong");
 });
 
 app.listen(3000, () => {
